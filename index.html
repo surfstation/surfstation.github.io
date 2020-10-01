@@ -1,6 +1,6 @@
 ---
 title: Welcome Home
-wave_height: 2-3ft
+wave_height: 1-3ft
 ---
 <!doctype html>
 <html>
@@ -10,5 +10,8 @@ wave_height: 2-3ft
   <body>
   <h1>Wave Height: {{ page.wave_height }}</h1>
   <h2>{{ site.time | date: '%Y%m%d%H%M%S' }}</h2>
+  {% if jekyll.environment == "production" %}
+    <!-- shown only in production -->
+  {% endif %}
   </body>
 </html>
