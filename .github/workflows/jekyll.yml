@@ -9,6 +9,8 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
+      - name: show some info
+        run: gcloud info
       - name: get the code
         uses: actions/checkout@v2
       - name: build the site in the jekyll/builder container
