@@ -1,4 +1,4 @@
-name: Jekyll site CI
+name: production publish
 
 on:
   push:
@@ -11,14 +11,16 @@ jobs:
     steps:
       - name: get the code
         uses: actions/checkout@v2
-      - name: Build the site in the jekyll/builder container
+      - name: build the site in the jekyll/builder container
         run: |
           docker run \
           -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
           jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && jekyll build"
-      - name: publish to google cloud storage
-        uses: GoogleCloudPlatform/github-actions/upload-cloud-storage@master
+      - name: prepare to upload to google cloud storage
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
-          credentials: ${{ secrets.gcp_credentials }}
-          path: ${{ github.workspace }}/_site/*
-          destination: imgs.surf-station.com
+          service_account_key: ${{ secrets.gcp_credentials }}
+          export_default_credentials: true
+          project_id: ${{ secrets.gcp_project_id }}
+      - name: publish to google cloud storage
+        run: gsutil -m rsync -r -d -c ${{ github.workspace }}/_site gs://imgs.surf-station.com
