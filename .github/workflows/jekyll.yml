@@ -14,10 +14,12 @@ jobs:
       - name: get the code
         uses: actions/checkout@v2
       - name: build the site in the jekyll/builder container
+        env:
+          JEKYLL_ENV: stage
         run: |
           docker run \
           -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-          jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && JEKYLL_ENV=development jekyll build"
+          jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && jekyll build"
       - name: prepare to upload to google cloud storage
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
