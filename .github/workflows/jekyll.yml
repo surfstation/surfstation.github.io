@@ -20,5 +20,5 @@ jobs:
         uses: GoogleCloudPlatform/github-actions/upload-cloud-storage@master
         with:
           credentials: ${{ secrets.gcp_credentials }}
-          path: ${{ github.workspace }}/_site
+          path: ${{ github.workspace }}/_site/
           destination: imgs.surf-station.com
