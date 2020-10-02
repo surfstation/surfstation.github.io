@@ -19,7 +19,7 @@ jobs:
       - name: prepare to upload to google cloud storage
         run: gcloud --quiet config set project ${{ secrets.gcp_project_id }}
       - name: prepare more
-        run: echo "${{ secrets.gcp_credentials }}" > /tmp/cred.json && gcloud --quiet auth activate-service-account "surfstation-github-action@${{ secrets.gcp_project_id }}.iam.gserviceaccount.com" --key-file=/tmp/cred.json
+        run: echo "${{ secrets.gcp_credentials }}" > "$HOME"/cred.json && gcloud --quiet auth activate-service-account "surfstation-github-action@${{ secrets.gcp_project_id }}.iam.gserviceaccount.com" --key-file="$HOME"/cred.json
       #  uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       #  with:
       #    service_account_key: ${{ secrets.gcp_credentials }}
