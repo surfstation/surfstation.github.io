@@ -16,12 +16,12 @@ jobs:
           docker run \
           -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
           jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && JEKYLL_ENV=production jekyll build"
-      - name: prepare to upload to google cloud storage
-        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-        with:
-          service_account_key: ${{ secrets.gcp_credentials }}
-          export_default_credentials: true
-          project_id: ${{ secrets.gcp_project_id }}
+      #- name: prepare to upload to google cloud storage
+      #  uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      #  with:
+      #    service_account_key: ${{ secrets.gcp_credentials }}
+      #    export_default_credentials: true
+      #    project_id: ${{ secrets.gcp_project_id }}
       - name: publish to google cloud storage
         run: "gsutil -m -h 'Cache-Control: public, max-age=31536000' rsync -r -d -c ${{ github.workspace }}/_site gs://imgs.surf-station.com"
       - name: update object metadata
