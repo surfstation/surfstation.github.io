@@ -20,8 +20,7 @@ jobs:
         run: gcloud --quiet config set project ${{ secrets.gcp_project_id }}
       - name: prepare more
         run: |
-          echo "${{ secrets.gcp_credentials }}" | base64 -d > /tmp/sec.json
-          gcloud --quiet auth activate-service-account "surfstation-github-action@${{ secrets.gcp_project_id }}.iam.gserviceaccount.com" --key-file=/tmp/sec.json
+          echo "${{ secrets.gcp_credentials }}" | base64 -d | gcloud --quiet auth activate-service-account "surfstation-github-action@${{ secrets.gcp_project_id }}.iam.gserviceaccount.com" --key-file=-
       #  uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       #  with:
       #    service_account_key: ${{ secrets.gcp_credentials }}
