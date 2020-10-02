@@ -18,7 +18,9 @@ jobs:
           jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && JEKYLL_ENV=production jekyll build"
       - name: prepare to upload to google cloud storage
         run: |
-          echo "${{ secrets.gcp_credentials }}" | base64 -d | gcloud --quiet --project "${{ secrets.gcp_project_id }}" auth activate-service-account "surfstation-github-action@${{ secrets.gcp_project_id }}.iam.gserviceaccount.com" --key-file=-
+          echo "${{ secrets.gcp_credentials }}" | \
+          base64 -d | \
+          gcloud --quiet --project="${{ secrets.gcp_project_id }}" auth activate-service-account "surfstation-github-action@${{ secrets.gcp_project_id }}.iam.gserviceaccount.com" --key-file=-
       #  uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       #  with:
       #    service_account_key: ${{ secrets.gcp_credentials }}
